@@ -10,7 +10,7 @@ import {
   createBadge,
   linkBadgeToCourse,
 } from "@/api/courseService";
-import type { Course, Badge } from "@/api/userService";
+import type { Course } from "@/api/userService";
 
 function CourseDetail() {
   const { id } = useParams<{ id: string }>();
@@ -111,7 +111,7 @@ function CourseDetail() {
   if (loading) {
     return (
       <div className="min-h-screen pt-24 px-6 flex items-center justify-center">
-        <p className="text-[var(--color-text-muted)]">Loading course...</p>
+        <p className="text-text-muted">Loading course...</p>
       </div>
     );
   }
@@ -119,7 +119,7 @@ function CourseDetail() {
   if (error || !course) {
     return (
       <div className="min-h-screen pt-24 px-6 flex items-center justify-center">
-        <p className="text-[var(--color-text-muted)]">{error || "Course not found"}</p>
+        <p className="text-text-muted">{error || "Course not found"}</p>
       </div>
     );
   }
@@ -133,22 +133,22 @@ function CourseDetail() {
       <div className="max-w-3xl mx-auto">
         <Link
           to="/courses"
-          className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors mb-6 inline-block"
+          className="text-sm text-text-muted hover:text-accent transition-colors mb-6 inline-block"
         >
           &larr; Back to courses
         </Link>
 
-        <div className="bg-[var(--color-surface)] border border-[var(--color-border-light)] rounded-2xl p-8 shadow-sm">
+        <div className="bg-surface border border-border-light rounded-2xl p-8 shadow-sm">
           <div className="flex items-start justify-between mb-6">
             <div>
               <h1
-                className="text-3xl font-semibold text-[var(--color-text)] mb-2"
+                className="text-3xl font-semibold text-text mb-2"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 {course.title}
               </h1>
               {course.category && (
-                <span className="inline-block px-3 py-1 bg-[var(--color-bg-alt)] text-[var(--color-text-muted)] text-xs font-medium rounded-full">
+                <span className="inline-block px-3 py-1 bg-bg-alt text-text-muted text-xs font-medium rounded-full">
                   {course.category}
                 </span>
               )}
@@ -157,7 +157,7 @@ function CourseDetail() {
               <div className="flex gap-2">
                 <Link
                   to={`/courses/${course.id}/edit`}
-                  className="px-4 py-2 border border-[var(--color-border)] hover:bg-[var(--color-bg-alt)] text-[var(--color-text)] text-sm font-medium rounded-lg transition-all duration-200"
+                  className="px-4 py-2 border border-border hover:bg-bg-alt text-text text-sm font-medium rounded-lg transition-all duration-200"
                 >
                   Edit
                 </Link>
@@ -171,11 +171,11 @@ function CourseDetail() {
             )}
           </div>
 
-          <p className="text-[var(--color-text-muted)] leading-relaxed mb-6">
+          <p className="text-text-muted leading-relaxed mb-6">
             {course.description || "No description"}
           </p>
 
-          <div className="flex items-center gap-4 text-sm text-[var(--color-text-muted)] mb-6">
+          <div className="flex items-center gap-4 text-sm text-text-muted mb-6">
             <span>By {authorNames || "Unknown"}</span>
           </div>
 
@@ -184,8 +184,8 @@ function CourseDetail() {
               onClick={enrolled ? handleUnenroll : handleEnroll}
               className={`px-6 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                 enrolled
-                  ? "border border-[var(--color-border)] hover:bg-[var(--color-bg-alt)] text-[var(--color-text)]"
-                  : "bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white"
+                  ? "border border-border hover:bg-bg-alt text-text"
+                  : "bg-accent hover:bg-accent-hover text-white"
               }`}
             >
               {enrolled ? "Unenroll" : "Enroll"}
@@ -193,9 +193,9 @@ function CourseDetail() {
           )}
 
           {course.badges && course.badges.length > 0 && (
-            <div className="mt-8 pt-6 border-t border-[var(--color-border-light)]">
+            <div className="mt-8 pt-6 border-t border-border-light">
               <h2
-                className="text-lg font-semibold text-[var(--color-text)] mb-4"
+                className="text-lg font-semibold text-text mb-4"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Badges
@@ -204,7 +204,7 @@ function CourseDetail() {
                 {course.badges.map((badge) => (
                   <div
                     key={badge.id}
-                    className="flex items-center gap-2 px-4 py-2 bg-[var(--color-bg-alt)] rounded-xl"
+                    className="flex items-center gap-2 px-4 py-2 bg-bg-alt rounded-xl"
                   >
                     {badge.imageUrl && (
                       <img
@@ -213,7 +213,7 @@ function CourseDetail() {
                         className="w-6 h-6 object-contain rounded"
                       />
                     )}
-                    <span className="text-sm text-[var(--color-text)]">{badge.name}</span>
+                    <span className="text-sm text-text">{badge.name}</span>
                   </div>
                 ))}
               </div>
@@ -221,9 +221,9 @@ function CourseDetail() {
           )}
 
           {canCreateBadge && (
-            <div className="mt-8 pt-6 border-t border-[var(--color-border-light)]">
+            <div className="mt-8 pt-6 border-t border-border-light">
               <h2
-                className="text-lg font-semibold text-[var(--color-text)] mb-4"
+                className="text-lg font-semibold text-text mb-4"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Add Badge
@@ -236,14 +236,14 @@ function CourseDetail() {
                   onChange={(e) => setBadgeName(e.target.value)}
                   required
                   disabled={badgeLoading}
-                  className="w-full px-4 py-3 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all duration-200 disabled:opacity-50"
+                  className="w-full px-4 py-3 bg-bg border border-border rounded-xl text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 disabled:opacity-50"
                 />
                 <input
                   type="file"
                   accept="image/*"
                   onChange={(e) => setBadgeImage(e.target.files?.[0] ?? null)}
                   disabled={badgeLoading}
-                  className="w-full text-sm text-[var(--color-text-muted)] file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-[var(--color-accent)] file:text-white hover:file:bg-[var(--color-accent-hover)]"
+                  className="w-full text-sm text-text-muted file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-accent file:text-white hover:file:bg-accent-hover"
                 />
                 <input
                   type="url"
@@ -251,12 +251,12 @@ function CourseDetail() {
                   value={badgeUrl}
                   onChange={(e) => setBadgeUrl(e.target.value)}
                   disabled={badgeLoading}
-                  className="w-full px-4 py-3 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all duration-200 disabled:opacity-50"
+                  className="w-full px-4 py-3 bg-bg border border-border rounded-xl text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 disabled:opacity-50"
                 />
                 <button
                   type="submit"
                   disabled={badgeLoading || !badgeName.trim()}
-                  className="self-start px-5 py-2.5 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] disabled:bg-[var(--color-accent-hover)] text-white text-sm font-medium rounded-lg transition-all duration-200"
+                  className="self-start px-5 py-2.5 bg-accent hover:bg-accent-hover disabled:bg-accent-hover text-white text-sm font-medium rounded-lg transition-all duration-200"
                 >
                   {badgeLoading ? "Creating..." : "Create Badge"}
                 </button>

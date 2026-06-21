@@ -1,14 +1,14 @@
 import { useState } from "react";
 import type { CreateCourseData, UpdateCourseData } from "@/api/courseService";
 
-interface Props {
+interface Props<T extends CreateCourseData | UpdateCourseData> {
   initial?: { title: string; category: string; description: string; avatarUrl: string };
-  onSubmit: (data: CreateCourseData | UpdateCourseData) => Promise<void>;
+  onSubmit: (data: T) => Promise<void>;
   submitLabel: string;
   loading: boolean;
 }
 
-function CourseForm({ initial, onSubmit, submitLabel, loading }: Props) {
+function CourseForm<T extends CreateCourseData | UpdateCourseData>({ initial, onSubmit, submitLabel, loading }: Props<T>) {
   const [title, setTitle] = useState(initial?.title ?? "");
   const [category, setCategory] = useState(initial?.category ?? "");
   const [description, setDescription] = useState(initial?.description ?? "");
@@ -30,7 +30,7 @@ function CourseForm({ initial, onSubmit, submitLabel, loading }: Props) {
         category: category.trim() || undefined,
         description: description.trim() || undefined,
         avatarUrl: avatarUrl.trim() || undefined,
-      });
+      } as T);
     } catch {
       setError("Something went wrong. Please try again.");
     }
